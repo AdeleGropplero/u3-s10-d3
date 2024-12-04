@@ -1,12 +1,15 @@
-import { Component } from "react";
 import { Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-class SingleMovie extends Component {
-  render() {
-    const { poster, title, year, id } = this.props;
+const SingleMovie = (props) => {
+  const { poster, title, year, id } = props;
 
-    return (
-      <Col className="my-2">
+  return (
+    <Col className="my-2">
+      <Link
+        to={`/details/${id}`}
+        style={{ color: "inherit", textDecoration: "none" }}
+      >
         <div
           className="movieCard"
           style={{ position: "relative", width: "100%" }}
@@ -29,9 +32,9 @@ class SingleMovie extends Component {
             <p>{`Id: ${id}`}</p>
           </div>
         </div>
-      </Col>
-    );
-  }
-}
+      </Link>
+    </Col>
+  );
+};
 
 export default SingleMovie;

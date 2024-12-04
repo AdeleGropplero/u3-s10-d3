@@ -34,6 +34,7 @@ const MyRowForMovies = (props) => {
   /*   componentDidMount() {
     this.fetchMovies();
   } */
+
   useEffect(() => {
     fetchMovies();
   }, []);

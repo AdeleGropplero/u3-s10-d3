@@ -1,5 +1,6 @@
 import logo from "../assets/netflix_logo.png";
 import avatar from "../assets/avatar.png";
+import { Link } from "react-router-dom";
 const MyNavBar = () => {
   return (
     <>
@@ -31,9 +32,9 @@ const MyNavBar = () => {
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link active" href="#">
-                    TV Shows
-                  </a>
+                  <Link className="nav-link active" to={"/saghe"}>
+                    Saghe
+                  </Link>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="#">
