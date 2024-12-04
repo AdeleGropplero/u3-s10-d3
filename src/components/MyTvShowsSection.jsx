@@ -3,7 +3,7 @@ const MyTvShowsSection = () => {
     <>
       <div className="my-3 bg-dark d-flex justify-content-between">
         <div className=" d-flex align-items-center flex-column flex-sm-row ms-5 ms-sm-0">
-          <h1 className="me-sm-4">TV Shows</h1>
+          <h1 className="me-sm-4">Scelti per Te</h1>
           <div className="btn-group">
             <button
               type="button"

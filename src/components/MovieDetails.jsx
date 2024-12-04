@@ -1,12 +1,15 @@
-import { useState } from "react";
-import { Button, Card } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { ListGroup } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
 const MovieDetails = () => {
-  const [movieObj, setMovieObj] = useState([]);
+  const [movieComments, setMovieComments] = useState([]);
+  const [movieDetailObj, setMovieDetailObj] = useState(null);
+  console.log(movieComments);
+
   const params = useParams();
 
-  const fetchMovieDetails = () => {
+  const getComments = () => {
     fetch(
       "https://striveschool-api.herokuapp.com/api/comments/" + params.MovieId,
       {
@@ -23,22 +26,88 @@ const MovieDetails = () => {
           throw new Error("Errore nella richiesta API");
         }
       })
-      .then((movieObjs) => {
-        setMovieObj(movieObj);
+      .then((movieComments) => {
+        console.log(movieComments);
+        setMovieComments(movieComments);
       });
   };
 
+  useEffect(() => {
+    getComments();
+  }, []);
+
+  const fetchMovies = () => {
+    fetch(`https://www.omdbapi.com/?apikey=eb1c85de&i=${params.MovieId}`)
+      .then((resp) => {
+        console.log("Risposta:", resp);
+        if (resp.ok) {
+          return resp.json();
+        } else {
+          throw new Error("Errore nella richiesta API");
+        }
+      })
+      .then((movieDetail) => {
+        /*  this.setState({ movies: moviesData.Search }); */
+        console.log("MOVIEDETAIL", movieDetail);
+        setMovieDetailObj(movieDetail);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  };
+
+  /*   componentDidMount() {
+    this.fetchMovies();
+  } */
+
+  useEffect(() => {
+    fetchMovies();
+  }, []);
+
   return (
-    <>
-      <Card>
-        <Card.Img variant="top" src="holder.js/100px180" />
-        <Card.Body>
-          <Card.Title>Card Title</Card.Title>
-          <Card.Text>Some quick example text</Card.Text>
-          <Button variant="primary">Go somewhere</Button>
-        </Card.Body>
-      </Card>
-    </>
+    <div className="d-flex justify-content-center text-light">
+      {movieDetailObj && (
+        <>
+          <img src={movieDetailObj.Poster} alt="movie" />
+          <div className="ms-4">
+            <h3>
+              {movieDetailObj.Title} - {movieDetailObj.Year} -
+            </h3>
+            <p>{movieDetailObj.Runtime}</p>
+            <p>{movieDetailObj.Plot}</p>
+            <p>
+              {movieDetailObj.Genre} - <strong> Director: </strong>
+              {movieDetailObj.Director}
+            </p>
+            <p>
+              <strong> Actors: </strong>
+              {movieDetailObj.Actors}
+            </p>
+            {movieComments && (
+              <ListGroup>
+                {movieComments.map((comment) => (
+                  <ListGroup.Item key={comment._id}>
+                    <p>
+                      <strong> Rate:</strong> {comment.rate} ☆
+                    </p>
+                    <p>
+                      <strong>Commento:</strong> {comment.comment}
+                    </p>
+                    <p>
+                      <strong>Autore:</strong> {comment.author}
+                    </p>
+                    <p>
+                      <strong>data:</strong>{" "}
+                      {new Date(comment.createdAt).toLocaleDateString()}
+                    </p>
+                  </ListGroup.Item>
+                ))}
+              </ListGroup>
+            )}
+          </div>
+        </>
+      )}
+    </div>
   );
 };
 export default MovieDetails;

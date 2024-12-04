@@ -27,9 +27,9 @@ const MyNavBar = () => {
             <div>
               <ul className="navbar-nav">
                 <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="#">
+                  <Link className="nav-link" aria-current="page" to="/">
                     Home
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link active" to={"/saghe"}>
@@ -117,9 +117,9 @@ const MyNavBar = () => {
                   </a>
                   <ul className="dropdown-menu dropdown-menu-end">
                     <li>
-                      <a className="dropdown-item" href="./profile.html">
+                      <Link className="dropdown-item" to="/areaPersonale">
                         Area Personale
-                      </a>
+                      </Link>
                     </li>
                     <li>
                       <a className="dropdown-item" href="#">
